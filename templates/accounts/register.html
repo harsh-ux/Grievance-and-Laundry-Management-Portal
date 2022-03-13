@@ -1,0 +1,45 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block stylesheet %}
+<style>
+    .flex-parent-element {
+        display: flex;
+        width: 100%;
+      }
+      
+      .flex-child-element {
+        flex: 1;
+        margin: 10px;
+      }
+      
+      .flex-child-element:first-child {
+        margin-left: 100px;
+      }
+</style>
+{% endblock stylesheet %}
+
+{% block content %}
+
+    <div class="flex-parent-element"style="background-color: #FFFFFF;">
+        <div class="flex-child-element" style="background-color: #FFFFFF;">
+            <img src= "{% static 'signup.png' %} " class="mx-auto my-auto"alt="signup" width="80%" height="90%"/>
+        </div>
+
+        <div class="flex-child-element  content-section">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">
+                        SignUp 
+                    </legend>
+                    {{ form|crispy }}
+                </fieldset>
+                <div>
+                    <button class="btn btn-outline-info" type="submit">Sign Up</button> 
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
