@@ -1,0 +1,107 @@
+{% load static %}
+{% load auth_validator %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grievance Settlement and Laundry Portal</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'laundry/main.css' %}">
+
+    {% block stylesheet %}{% endblock stylesheet %}
+    <style>
+      .ctr{
+        position: absolute;
+        width: 80%;
+        height: 60%;        
+        top:0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+      }
+      a:hover{
+        color: #6927ff;
+      }
+
+      @media (max-width: 768px) {
+        .navbar-nav .nav-link {
+            text-align: center;
+        }
+      }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-light fixed-top">
+          <div class="container">
+            <a class="navbar-brand mr-4" href="{% url 'laundry-index' %}"><p style="color:black; background-color: #F5F5F5;">Grievance Settlement and Laundry Portal</p></a>
+            
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+
+                {% if request.user|has_group:"Student" %}
+                  <a class="nav-item nav-link" style="color:black" href="{% url 'laundry-place-order' %}">Place Order</a>
+                  <a class="nav-item nav-link" style="color:black" href="{% url 'complaint' %}">Complaint</a>
+                  <a class="nav-item nav-link" style="color:black" href="{% url 'laundry-order-history' %}">History</a>
+                {% endif %}
+
+                {% if request.user|has_group:"Employee" %}
+                  <a class="nav-item nav-link" style="color:black;" href="{% url 'laundry-orders-list' %}">Orders</a>
+                {% endif %}
+              </div>
+              
+              <!-- Navbar Right Side -->
+              <div class="navbar-nav">
+                {% if not  user.is_authenticated %}
+                  <a class="nav-item nav-link" style="color:black"href="{% url 'login' %}">Login</a>
+                  <a class="nav-item nav-link" style="color:black"href="{% url 'user-registration' %}">Create Account</a>
+                {% else %}
+                  <!-- {% if not request.user|has_group:"Employee" %} -->
+                    <a class="nav-item nav-link" style="color:black"href="{% url 'user-profile' %}">Update Profile</a>
+                  <!-- {%endif%} -->
+                  <a class="nav-item nav-link" style="color:black"href="{% url 'logout' %}">Logout</a>
+                  {% if request.user|has_group:"Student" %}
+                    <!-- <a class="nav-item nav-link" href="#">Notification</a> -->
+                  {%endif%}
+                  <a class="nav-item nav-link" style="color:black"href="{% url 'display-last-order' %}">Me</a>
+                {% endif %}
+              </div>
+            </div>
+            
+          </div>
+        </nav>
+      </header>
+
+        
+      {% block content %}{% endblock %}
+        
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+      {% block javascript %}{% endblock javascript %}
+      <footer>
+        <div class="mx-0" style="background-color: #6927ff;">
+          <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <p style="text-align: center; vertical-align: middle; line-height: 30px; color:#eceeef;">Made with &#10084 by Harsh Agarwal
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+</body>
+</html>
+
+
